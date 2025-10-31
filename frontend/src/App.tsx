@@ -11,7 +11,7 @@ import type {
   TimeSlot 
 } from './types';
 
-const API_BASE_URL = process.env.REACT_APP_API_URL;;
+const API_BASE_URL = process.env.VITE_API_URL;;
 
 type PageType = 'home' | 'details' | 'checkout' | 'result';
 
