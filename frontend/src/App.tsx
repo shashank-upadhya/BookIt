@@ -11,7 +11,7 @@ import type {
   TimeSlot 
 } from './types';
 
-const API_BASE = 'http://localhost:5000/api';
+const API_BASE_URL = process.env.REACT_APP_API_URL;;
 
 type PageType = 'home' | 'details' | 'checkout' | 'result';
 
@@ -88,7 +88,7 @@ function HomePage({ onSelectExperience }: HomePageProps) {
   const fetchExperiences = async () => {
     try {
       setLoading(true);
-      const response = await axios.get<Experience[]>(`${API_BASE}/experiences`);
+      const response = await axios.get<Experience[]>(`${API_BASE_URL}/experiences`);
       setExperiences(response.data);
       setError(null);
     } catch (err) {
@@ -213,7 +213,7 @@ function DetailsPage({ experience, onBack, onProceed }: DetailsPageProps) {
   const fetchExperienceDetails = async () => {
     try {
       setLoading(true);
-      const response = await axios.get<Experience>(`${API_BASE}/experiences/${experience._id}`);
+      const response = await axios.get<Experience>(`${API_BASE_URL}/experiences/${experience._id}`);
       setFullExperience(response.data);
       if (response.data.availability.length > 0) {
         setSelectedDate(response.data.availability[0].date);
@@ -509,7 +509,7 @@ function CheckoutPage({ bookingData, onBack, onComplete }: CheckoutPageProps) {
 
     try {
       setValidatingPromo(true);
-      const response = await axios.post<PromoValidationResponse>(`${API_BASE}/promo/validate`, {
+      const response = await axios.post<PromoValidationResponse>(`${API_BASE_URL}/promo/validate`, {
         code: promoCode,
         subtotal,
       });
@@ -545,7 +545,7 @@ function CheckoutPage({ bookingData, onBack, onComplete }: CheckoutPageProps) {
 
     try {
       setLoading(true);
-      const response = await axios.post(`${API_BASE}/bookings`, {
+      const response = await axios.post(`${API_BASE_URL}/bookings`, {
         experienceId: bookingData.experienceId,
         selectedDate: bookingData.selectedDate,
         selectedSlot: bookingData.selectedSlot,
